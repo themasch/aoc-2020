@@ -1,31 +1,9 @@
 use chrono::prelude::*;
 use std::fs::File;
-use std::io::{BufReader, Read};
+use std::io::BufReader;
+use aoc_2020::*;
 
-pub trait Solution {
-    type Input;
-    type Output;
-
-    fn solve(input: Self::Input) -> Result<Self::Output, ()>;
-}
-
-pub trait ReadInput<R>
-where
-    R: Read,
-    Self: Sized,
-{
-    fn read(r: R) -> Result<Self, ()>;
-}
-
-pub fn run_solution<S: Solution, R: Read + Sized>(from: R) -> S::Output
-where
-    S::Input: ReadInput<R>,
-{
-    let input = S::Input::read(from).unwrap();
-    S::solve(input).unwrap()
-}
-
-mod day1;
+use aoc_2020::day1;
 
 macro_rules! daymap {
     ($key:ident, { $($idx:expr => $mod:ident),+ }) => {
@@ -44,7 +22,7 @@ macro_rules! daymap {
 }
 
 fn main() {
-    let today = if let Some(param) = std::env::args().skip(1).next() {
+    let today = if let Some(param) = std::env::args().nth(1) {
         param.parse().unwrap()
     } else {
         Local::now().day()
