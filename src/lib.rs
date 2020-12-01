@@ -25,7 +25,7 @@ where
     S::solve(input).unwrap()
 }
 
-mod day1;
+pub mod day1;
 
 macro_rules! daymap {
     ($key:ident, { $($idx:expr => $mod:ident),+ }) => {
