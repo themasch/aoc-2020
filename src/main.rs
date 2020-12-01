@@ -1,7 +1,7 @@
+use aoc_2020::*;
 use chrono::prelude::*;
 use std::fs::File;
 use std::io::BufReader;
-use aoc_2020::*;
 
 use aoc_2020::day1;
 

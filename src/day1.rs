@@ -39,12 +39,14 @@ impl crate::Solution for SecondStep {
 
     fn solve(input: Self::Input) -> Result<Self::Output, ()> {
         let list = input.0;
+        let len = list.len();
 
-        for a in &list { 
-            for b in &list {
-                for c in &list {
-                    if a + b + c == 2020 {
-                        return Ok(a * b * c);
+        for a in 0..len {
+            for b in (a + 1)..len {
+                for c in (b + 1)..len {
+                    let (va, vb, vc) = (list[a], list[b], list[c]);
+                    if va + vb + vc == 2020 {
+                        return Ok(va * vb * vc);
                     }
                 }
             }

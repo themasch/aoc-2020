@@ -19,9 +19,7 @@ pub fn run_solution<S: Solution, R: Read + Sized>(from: R) -> S::Output
 where
     S::Input: ReadInput<R>,
 {
-    let input = S::Input::read(from).unwrap();
-    S::solve(input).unwrap()
+    S::solve(ReadInput::read(from).unwrap()).unwrap()
 }
 
 pub mod day1;
-
