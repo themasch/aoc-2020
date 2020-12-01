@@ -20,7 +20,7 @@ impl crate::Solution for FirstStep {
     fn solve(input: Self::Input) -> Result<Self::Output, ()> {
         let list = input.0;
 
-        for a in list.clone().iter().rev() {
+        for a in list.iter().rev() {
             for b in &list {
                 if a + b == 2020 {
                     return Ok(a * b);
