@@ -1,7 +1,8 @@
+use std::collections::HashSet;
 use std::io::BufRead;
 
 #[derive(Debug, Clone)]
-pub struct Input(Vec<usize>);
+pub struct Input(HashSet<usize>);
 impl<R: BufRead> crate::ReadInput<R> for Input {
     fn read(r: R) -> Result<Input, ()> {
         let vec = r
@@ -20,11 +21,10 @@ impl crate::Solution for FirstStep {
     fn solve(input: Self::Input) -> Result<Self::Output, ()> {
         let list = input.0;
 
-        for a in list.iter().rev() {
-            for b in &list {
-                if a + b == 2020 {
-                    return Ok(a * b);
-                }
+        for a in &list {
+            let delta = 2020 - a;
+            if list.contains(&delta) {
+                return Ok(a * delta);
             }
         }
 
@@ -39,15 +39,11 @@ impl crate::Solution for SecondStep {
 
     fn solve(input: Self::Input) -> Result<Self::Output, ()> {
         let list = input.0;
-        let len = list.len();
 
-        for a in 0..len {
-            for b in (a + 1)..len {
-                for c in (b + 1)..len {
-                    let (va, vb, vc) = (list[a], list[b], list[c]);
-                    if va + vb + vc == 2020 {
-                        return Ok(va * vb * vc);
-                    }
+        for a in &list {
+            for delta in list.iter().filter_map(|b| 2020usize.checked_sub(a + b)) {
+                if list.contains(&delta) {
+                    return Ok(a * delta * (2020 - delta - a));
                 }
             }
         }
@@ -71,7 +67,7 @@ mod test {
 1456"#;
         assert_eq!(
             Ok(514579),
-            FirstStep::solve(Input::read(input.as_bytes()).unwrap())
+            FirstStep::solve(<FirstStep as Solution>::Input::read(input.as_bytes()).unwrap())
         );
     }
 
@@ -85,7 +81,7 @@ mod test {
 1456"#;
         assert_eq!(
             Ok(241861950),
-            SecondStep::solve(Input::read(input.as_bytes()).unwrap())
+            SecondStep::solve(<SecondStep as Solution>::Input::read(input.as_bytes()).unwrap())
         );
     }
 }
