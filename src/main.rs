@@ -3,6 +3,7 @@ use chrono::prelude::*;
 use std::fs::File;
 use std::io::BufReader;
 
+use aoc_2020::day02;
 use aoc_2020::day1;
 
 macro_rules! daymap {
@@ -29,6 +30,7 @@ fn main() {
     };
 
     daymap!(today, {
-        1 => day1
+        1 => day1,
+        2 => day02
     });
 }
