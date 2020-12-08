@@ -114,7 +114,7 @@ fn check_bag(
 
     for color in subbag.keys() {
         if checked.contains_key(color) {
-            if checked[color] { 
+            if checked[color] {
                 return true;
             } else {
                 continue;
@@ -143,10 +143,18 @@ impl Solution for SecondStep {
     }
 }
 
-fn count_bags_in(bag: &HashMap<String, usize>, all_bags: &HashMap<String, HashMap<String, usize>>) -> usize {
+fn count_bags_in(
+    bag: &HashMap<String, usize>,
+    all_bags: &HashMap<String, HashMap<String, usize>>,
+) -> usize {
     bag.iter()
-        .map(| (color, count) |  {
-            count * (all_bags.get(color).map(| subbag | count_bags_in(subbag, all_bags)).unwrap_or(0) + 1)
+        .map(|(color, count)| {
+            count
+                * (all_bags
+                    .get(color)
+                    .map(|subbag| count_bags_in(subbag, all_bags))
+                    .unwrap_or(0)
+                    + 1)
         })
         .sum()
 }
@@ -190,7 +198,6 @@ dotted black bags contain no other bags."#;
         let read = Input::read(BufReader::new(INPUT.as_bytes())).unwrap();
         assert_eq!(Ok(32), SecondStep::solve(read));
     }
-
 
     #[test]
     fn test_step_2b() {
