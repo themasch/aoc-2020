@@ -10,7 +10,7 @@ impl<R: BufRead> ReadInput<R> for Input {
     fn read(b: R) -> Result<Input, ()> {
         let v: BagMap = b
             .lines()
-            .flat_map(|line| line)
+            .flatten()
             // we do not care about bags that contain nothing
             .filter(|line| !line.contains("no other bags."))
             .flat_map(|line| parse_bag_line(&line))
@@ -131,7 +131,7 @@ fn check_bag(
         }
     }
 
-    return false;
+    false
 }
 
 pub struct SecondStep;
