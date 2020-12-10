@@ -172,7 +172,7 @@ mod test {
     use super::*;
     use std::io::BufReader;
 
-    static input: &str = r#"ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
+    static INPUT: &str = r#"ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
 byr:1937 iyr:2017 cid:147 hgt:183cm
 
 iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884
@@ -188,12 +188,12 @@ iyr:2011 ecl:brn hgt:59in"#;
 
     #[test]
     fn test_read_passports() {
-        let read = Input::read(BufReader::new(input.as_bytes())).unwrap();
+        Input::read(BufReader::new(INPUT.as_bytes())).unwrap();
     }
 
     #[test]
     fn test_step_1() {
-        let read = Input::read(BufReader::new(input.as_bytes())).unwrap();
+        let read = Input::read(BufReader::new(INPUT.as_bytes())).unwrap();
         assert_eq!(Ok(2), FirstStep::solve(read));
     }
 
